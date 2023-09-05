@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package model;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author t
  */
-@WebServlet(name = "JController", urlPatterns = {"/jp.do"})
-public class JController extends HttpServlet {
+@WebServlet(name = "StudentServlet", urlPatterns = {"/StudentServlet"})
+public class StudentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +33,8 @@ public class JController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
-           
-            String action = request.getParameter("action");
-
-            if (action.equalsIgnoreCase("dashboard")) {
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("student-list")) {
-                request.getRequestDispatcher("/students/students_list.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("student")) {
-                request.getRequestDispatcher("/students/students.jsp").forward(request, response);
-            }
-
+            
+            
         }
     }
 
