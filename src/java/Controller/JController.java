@@ -39,10 +39,18 @@ public class JController extends HttpServlet {
 
             if (action.equalsIgnoreCase("dashboard")) {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("student-list")) {
+            } 
+            else if (action.equalsIgnoreCase("student-form")) {
+                request.getRequestDispatcher("/students/student_form.jsp").forward(request, response);
+            } 
+            else if (action.equalsIgnoreCase("student-list")) {
                 request.getRequestDispatcher("/students/students_list.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("student")) {
+            } 
+            else if (action.equalsIgnoreCase("student")) {
                 request.getRequestDispatcher("/students/students.jsp").forward(request, response);
+            } 
+            else if (action.equalsIgnoreCase("process-student")) {
+                request.getRequestDispatcher("/ProcessStudentServlet").forward(request, response);
             }
 
         }

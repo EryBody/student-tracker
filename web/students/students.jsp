@@ -62,25 +62,61 @@
 
                     <jsp:include page="../main_header.jsp" flush="true"/>
 
+
+
                     <!--begin::Content-->
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+
                         <!--begin::Container-->
                         <div class="container-xxl" id="kt_content_container">
+
+                            <%
+                                if(request.getAttribute("errorMsg")!=null){
+                                    String errorMsg = String.valueOf(request.getAttribute("errorMsg"));
+                                    out.print("<div class='alert alert-danger' role='alert'> "+errorMsg+" </div>");
+                                }else{
+                                    out.print("");
+                                }
+                            %>
+                            
+                            
+                            
+                            <%
+                                //if(request.getAttribute("errorMsg")!=null){
+                                    //String errorMsg = String.valueOf(request.getAttribute("errorMsg"));
+                            %>
+                                <!--When displaying errorMsg using the method, inject the code with a jsp inject expression tag-->
+                                <!--<div class="alert alert-danger" role='alert'> errorMsg  </div>-->
+                            <%
+                                //}else{
+                                    //out.print("");
+                                //}
+                            %>
+
                             <!--begin::Card-->
                             <div class="card">
+
+
                                 <!--begin::Card body-->
                                 <div class="card-body p-0">
+
+
+
                                     <!--begin::Wrapper-->
                                     <div class="card-px text-center py-20 my-10">
+
+
+
                                         <!--begin::Title-->
-                                        <h2 class="fs-2x fw-bold mb-10">Welcome to Customers App</h2>
+                                        <h2 class="fs-2x fw-bold mb-10">Welcome to Student App</h2>
                                         <!--end::Title-->
                                         <!--begin::Description-->
-                                        <p class="text-gray-400 fs-4 fw-semibold mb-10">There are no customers added yet.
-                                            <br />Kickstart your CRM by adding a your first customer</p>
+                                        <p class="text-gray-400 fs-4 fw-semibold mb-10">There are no Student added yet.
+                                            <br />Kickstart your CRM by adding a your first Student</p>
                                         <!--end::Description-->
                                         <!--begin::Action-->
-                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Customer</a>
+                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Student</a>
                                         <!--end::Action-->
                                     </div>
                                     <!--end::Wrapper-->
@@ -94,9 +130,9 @@
                             </div>
                             <!--end::Card-->
                             <!--begin::Modals-->
-                            
+
                             <jsp:include page="modal_add_student.jsp" flush="true"/>
-                            
+
                             <!--end::Modals-->
                         </div>
                         <!--end::Container-->
@@ -145,12 +181,11 @@
         <script src="assets/js/custom/apps/chat/chat.js"></script>
         <script src="assets/js/custom/utilities/modals/users-search.js"></script>
         <!--end::Custom Javascript-->
-        
-         <!--begin::Custom Javascript(used for this page only)-->
+        <!--begin::Custom Javascript(used for this page only)-->
         <script src="assets/js/custom/apps/customers/list/export.js"></script>
         <script src="assets/js/custom/apps/customers/list/list.js"></script>
         <script src="assets/js/custom/apps/customers/add.js"></script>
-        
+
         <!--end::Javascript-->
     </body>
 

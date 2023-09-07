@@ -12,7 +12,7 @@
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_add_customer_form" action="POST" data-kt-redirect="../../demo3/dist/apps/customers/list.html">
+            <form class="form" action="jp.do?action=process-student" method="POST" id="kt_modal_add_customer_form" data-kt-redirect="jp.do?action=student-list">
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_add_customer_header">
                     <!--begin::Modal title-->
@@ -38,7 +38,7 @@
                             <label class="required fs-6 fw-semibold mb-2">Full Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Full Name" name="name" value="" />
+                            <input type="text" class="form-control form-control-solid" placeholder="Full Name" name="fullName" value=""/>
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -91,7 +91,7 @@
                             <label class="required fs-6 fw-semibold mb-2">Phone Number</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                             <input type="number" class="form-control form-control-solid" placeholder="Phone Number" name="Phone Number" value="0810 257 8666" />
+                             <input type="number" class="form-control form-control-solid" placeholder="Phone Number" name="phoneNumber" value="0810 257 8666" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -101,7 +101,6 @@
                             <!--begin::Label-->
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">Gender</span>
-                               
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
@@ -112,10 +111,10 @@
                             </select>
                             <!--end::Input-->
                         </div>
-
                     </div>
                     <!--end::Scroll-->
                 </div>
+                
                 <!--end::Modal body-->
                 <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
@@ -123,10 +122,11 @@
                     <button type="reset" id="kt_modal_add_customer_cancel" class="btn btn-light me-3">Discard</button>
                     <!--end::Button-->
                     <!--begin::Button-->
-                    <button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">
-                        <span class="indicator-label">Submit</span>
-                        <span class="indicator-progress">Please wait...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    <!--The id="kt_modal_add_customer_submit" triggers a JS code to show success or failed modal which i removed to accomodate my servlet-->
+                    <!--<button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">-->
+                    
+                    <button type="submit" name="buttonName" value="Submit" class="btn btn-success">
+                        Submit
                     </button>
                     <!--end::Button-->
                 </div>

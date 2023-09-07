@@ -3,6 +3,9 @@
     Created on : Aug 22, 2023, 10:46:47 AM
     Author     : sleader
 --%>
+<%@page import="java.util.List"%>
+<%@page import="beans.StudentBean"%>
+<%@page import="DAO.StudentDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,6 +69,22 @@
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                         <!--begin::Container-->
                         <div class="container-xxl" id="kt_content_container">
+
+                            <%
+                                if (request.getAttribute("msg") != null) {
+                                    String msg = String.valueOf(request.getAttribute("msg"));
+                                    out.print("<div class='alert alert-success' role='alert'> " + msg + " </div>");
+                                } else {
+
+                                    if (request.getAttribute("errorMsg") != null) {
+                                        String errorMsg = String.valueOf(request.getAttribute("errorMsg"));
+                                        out.print("<div class='alert alert-danger' role='alert'> " + errorMsg + " </div>");
+                                    } else {
+                                        out.print("");
+                                    }
+                                }
+                            %>
+
                             <!--begin::Card-->
                             <div class="card">
                                 <!--begin::Card header-->
@@ -88,7 +107,7 @@
                                         <!--begin::Toolbar-->
                                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                                             <!--begin::Filter-->
-                                           
+
                                             <!--begin::Add customer-->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Customer</button>
                                             <!--end::Add customer-->
@@ -116,15 +135,42 @@
                                                         <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
                                                     </div>
                                                 </th>
-                                                <th class="min-w-125px">Customer Name</th>
+                                                <th class="min-w-125px">Student ID</th>
+                                                <th class="min-w-125px">Full Name</th>
                                                 <th class="min-w-125px">Email</th>
-                                                <th class="min-w-125px">Company</th>
-                                                <th class="min-w-125px">Payment Method</th>
-                                                <th class="min-w-125px">Created Date</th>
+                                                <th class="min-w-125px">Gender</th>
+                                                <th class="min-w-125px">Phone Number</th>
+                                                <th class="min-w-125px">Age</th>
+                                                <th class="min-w-125px">Date</th>
                                                 <th class="text-end min-w-70px">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody class="fw-semibold text-gray-600">
+
+                                            <%
+                                                StudentDAO studentDAO = new StudentDAO();
+                                                StudentBean bean = new StudentBean();
+
+                                                String studentId = "";
+                                                String fullName = "";
+                                                int age = -1;
+                                                String gender = "";
+                                                String email = "";
+                                                String phoneNumber = "";
+                                                String date = "";
+
+                                                List<StudentBean> students = studentDAO.getStudentList();
+
+                                                for (StudentBean sb : students) {
+                                                    
+                                                    studentId = sb.getStudentId();
+                                                    fullName = sb.getFullName();
+                                                    age = sb.getAge();
+                                                    gender = sb.getGender();
+                                                    email = sb.getEmail();
+                                                    phoneNumber = sb.getPhoneNumber();
+                                                    date = sb.getDate();
+                                            %>
                                             <tr>
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -132,15 +178,18 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="../../demo3/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1">Emma Smith</a>
+                                                    <a href="" class="text-gray-800 text-hover-primary mb-1"><%=studentId%></a>
                                                 </td>
                                                 <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">smith@kpmg.com</a>
+                                                    <a href="" class="text-gray-800 text-hover-primary mb-1"><%=fullName%></a>
                                                 </td>
-                                                <td>-</td>
-                                                <td data-filter="mastercard">
-                                                    <img src="assets/media/svg/card-logos/mastercard.svg" class="w-35px me-3" alt="" />**** 8513</td>
-                                                <td>14 Dec 2020, 8:43 pm</td>
+                                                <td>
+                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1"><%=email%></a>
+                                                </td>
+                                                <td><%=gender%></td>
+                                                <td><%=phoneNumber%></td>
+                                                <td><%=age%></td>
+                                                <td><%=date%></td>
                                                 <td class="text-end">
                                                     <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                         <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -148,53 +197,20 @@
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="../../demo3/dist/apps/customers/view.html" class="menu-link px-3">View</a>
+                                                            <a href="jp.do?action=student-form&op=update&studentId=<%=studentId%>" class="menu-link px-3">Update</a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                                                            <a href="jp.do?action=student-form&op=delete&studentId=<%=studentId%>" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                     </div>
                                                     <!--end::Menu-->
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1" />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="../../demo3/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1">Melody Macy</a>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">melody@altbox.com</a>
-                                                </td>
-                                                <td>Google</td>
-                                                <td data-filter="visa">
-                                                    <img src="assets/media/svg/card-logos/visa.svg" class="w-35px me-3" alt="" />**** 5050</td>
-                                                <td>01 Dec 2020, 10:12 am</td>
-                                                <td class="text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="../../demo3/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                            </tr>
+                                            <%                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                     <!--end::Table-->
@@ -203,9 +219,9 @@
                             </div>
                             <!--end::Card-->
                             <!--begin::Modals-->
-                            
+
                             <jsp:include page="modal_add_student.jsp" flush="true"/>
-                                                                                   
+
                             <!--end::Modals-->
                         </div>
                         <!--end::Container-->
@@ -251,12 +267,12 @@
         <script src="assets/js/custom/widgets.js"></script>
         <script src="assets/js/custom/apps/chat/chat.js"></script>
         <script src="assets/js/custom/utilities/modals/users-search.js"></script>
-        
+
         <!--begin::Custom Javascript(used for this page only)-->
         <script src="assets/js/custom/apps/customers/list/export.js"></script>
         <script src="assets/js/custom/apps/customers/list/list.js"></script>
         <script src="assets/js/custom/apps/customers/add.js"></script>
-		
+
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
     </body>
