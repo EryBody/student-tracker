@@ -4,7 +4,9 @@
  */
 package DAO;
 
+import Tests.CourseTest;
 import Tests.StudentTest;
+import beans.CourseBean;
 import beans.StudentBean;
 import connection.SQLConnection;
 import java.sql.Connection;
@@ -21,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author t
  */
-public class StudentDAO {
+public class CourseDAO {
 
     SQLConnection connection = new SQLConnection();
     Connection connect = null;
@@ -34,23 +36,21 @@ public class StudentDAO {
      * @param bean
      * @return int
      */
-    public int addStudentData(StudentBean bean) {
+    public int addCourseData(CourseBean bean) {
 
         int status = -1;
 
-        String query = "insert into students values(?,?,?,?,?,?,?)";
+        String query = "insert into courses values(?,?,?,?,?)";
 
         connect = connection.getNewConnection();
         try {
             ps = connect.prepareStatement(query);
 
-            ps.setString(1, bean.getStudentId());
-            ps.setString(2, bean.getFullName());
-            ps.setInt(3, bean.getAge());
-            ps.setString(4, bean.getGender());
-            ps.setString(5, bean.getEmail());
-            ps.setString(6, bean.getPhoneNumber());
-            ps.setString(7, bean.getDate());
+            ps.setString(1, bean.getCourseId());
+            ps.setString(2, bean.getInstructorId());
+            ps.setString(3, bean.getCourseName());
+            ps.setInt(4, bean.getUnit());
+            ps.setString(5, bean.getEntryDate());
 
             status = ps.executeUpdate();
 
@@ -63,10 +63,10 @@ public class StudentDAO {
 
         } catch (SQLException ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
 
             if (ps != null) {
@@ -74,7 +74,7 @@ public class StudentDAO {
                     ps.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -83,7 +83,7 @@ public class StudentDAO {
                     connect.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -98,22 +98,20 @@ public class StudentDAO {
      * @param bean
      * @return int
      */
-    public int updateStudentData(StudentBean bean) {
+    public int updateCourseData(CourseBean bean) {
 
         int status = -1;
 
-        String query = "update students set full_name = ?, age=?, gender=?, email=?, pnone_number=? where student_id = ?";
+        String query = "update courses set instructor_id = ?, course_name=?, unit=? where course_id = ? ";
 
         connect = connection.getNewConnection();
         try {
             ps = connect.prepareStatement(query);
 
-            ps.setString(1, bean.getFullName());
-            ps.setInt(2, bean.getAge());
-            ps.setString(3, bean.getGender());
-            ps.setString(4, bean.getEmail());
-            ps.setString(5, bean.getPhoneNumber());
-            ps.setString(6, bean.getStudentId());
+            ps.setString(1, bean.getInstructorId());
+            ps.setString(2, bean.getCourseName());
+            ps.setInt(3, bean.getUnit());
+            ps.setString(4, bean.getCourseId());
 
             status = ps.executeUpdate();
 
@@ -126,10 +124,10 @@ public class StudentDAO {
 
         } catch (SQLException ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
 
             if (ps != null) {
@@ -137,7 +135,7 @@ public class StudentDAO {
                     ps.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -146,7 +144,7 @@ public class StudentDAO {
                     connect.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -158,21 +156,21 @@ public class StudentDAO {
     /**
      * This method deletes student record from database
      * 
-     * @param studentId
+     * @param courseId
      * @return 
      */
-    public int deleteStudentData(String studentId) {
+    public int deleteCourseData(String courseId) {
 
         int status = -1;
 
-        String query = "delete from students where student_id=?";
+        String query = "delete from courses where course_id=?";
 
         connect = connection.getNewConnection();
 
         try {
 
             ps = connect.prepareStatement(query);
-            ps.setString(1, studentId);
+            ps.setString(1, courseId);
 
             status = ps.executeUpdate();
             if (status > 0) {
@@ -183,10 +181,10 @@ public class StudentDAO {
 
         } catch (SQLException ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
 
             if (ps != null) {
@@ -194,7 +192,7 @@ public class StudentDAO {
                     ps.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -203,7 +201,7 @@ public class StudentDAO {
                     connect.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -216,41 +214,39 @@ public class StudentDAO {
     /**
      * 
      * This method gets Student Data from database
-     * @param studentId
+     * @param courseId
      * @return 
      */
-    public StudentBean getStudentData(String studentId) {
-        StudentBean bean = new StudentBean();
+    public CourseBean getCourseData(String courseId) {
+        CourseBean bean = new CourseBean();
 
         ResultSet result = null;
 
-        String query = "select * from students where student_id=?";
+        String query = "select * from courses where course_id=?";
 
         connect = connection.getNewConnection();
 
         try {
 
             ps = connect.prepareStatement(query);
-            ps.setString(1, studentId);
+            ps.setString(1, courseId);
 
             result = ps.executeQuery();
             if (result.next()) {
-                bean.setStudentId(result.getString("student_id"));
-                bean.setFullName(result.getString("full_name"));
-                bean.setAge(result.getInt("age"));
-                bean.setGender(result.getString("gender"));
-                bean.setEmail(result.getString("email"));
-                bean.setPhoneNumber(result.getString("pnone_number"));
-                bean.setDate(result.getString("entry_date"));
+                bean.setCourseId(result.getString("course_id"));
+                bean.setInstructorId(result.getString("instructor_id"));
+                bean.setCourseName(result.getString("course_name"));
+                bean.setUnit(result.getInt("unit"));
+                bean.setEntryDate(result.getString("entry_date"));
 
             }
 
         } catch (SQLException ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
 
             if (ps != null) {
@@ -258,7 +254,7 @@ public class StudentDAO {
                     ps.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -266,7 +262,7 @@ public class StudentDAO {
                 try {
                     result.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -275,7 +271,7 @@ public class StudentDAO {
                     connect.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -286,13 +282,13 @@ public class StudentDAO {
     }
     
     
-    public List<StudentBean> getStudentList(){
+    public List<CourseBean> getCourseList(){
         
-        List<StudentBean> students = new ArrayList<>();
+        List<CourseBean> courses = new ArrayList<>();
 
         ResultSet result = null;
 
-        String query = "select * from students";
+        String query = "select * from courses";
 
         connect = connection.getNewConnection();
 
@@ -301,27 +297,26 @@ public class StudentDAO {
             statement = connect.createStatement();
 
             result = statement.executeQuery(query);
+            
             while (result.next()) {
 
-                StudentBean bean = new StudentBean();
+                CourseBean bean = new CourseBean();
 
-                bean.setStudentId(result.getString("student_id"));
-                bean.setFullName(result.getString("full_name"));
-                bean.setAge(result.getInt("age"));
-                bean.setGender(result.getString("gender"));
-                bean.setEmail(result.getString("email"));
-                bean.setPhoneNumber(result.getString("pnone_number"));
-                bean.setDate(result.getString("entry_date"));
+                bean.setCourseId(result.getString("course_id"));
+                bean.setInstructorId(result.getString("instructor_id"));
+                bean.setCourseName(result.getString("course_name"));
+                bean.setUnit(result.getInt("unit"));
+                bean.setEntryDate(result.getString("entry_date"));
 
-                students.add(bean);
+                courses.add(bean);
             }
 
         } catch (SQLException ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (Exception ex) {
             System.out.println("Exception" + ex);
-            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
 
             if (ps != null) {
@@ -329,7 +324,7 @@ public class StudentDAO {
                     ps.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
 
@@ -337,7 +332,7 @@ public class StudentDAO {
                 try {
                     result.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -346,31 +341,31 @@ public class StudentDAO {
                     connect.close();
                 } catch (SQLException ex) {
                     System.out.println("Exception" + ex);
-                    Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
         }
 
-        return students;
+        return courses;
     }
     
     
 
     public static void main(String[] args) {
         
-        StudentTest testBean = new StudentTest();
+        CourseTest testBean = new CourseTest();
         
-        String studentId = "MjjtS";
+        String courseId = "MjjtS";
         
-        testBean.testAddStudentData();
+        testBean.testAddCourseData();
         
-        testBean.testUpdateStudentData(studentId);
+        testBean.testUpdateCourseData(courseId);
         
-        testBean.testDeleteStudentData(studentId);
+        testBean.testDeleteCourseData(courseId);
         
-        testBean.testGetStudentData(studentId);
+        testBean.testGetCourseData(courseId);
         
-        testBean.testGetStudentList();
+        testBean.testGetCourseList();
     }
 
 }

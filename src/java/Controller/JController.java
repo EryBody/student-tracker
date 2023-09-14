@@ -34,23 +34,33 @@ public class JController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-           
             String action = request.getParameter("action");
 
             if (action.equalsIgnoreCase("dashboard")) {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
-            } 
-            else if (action.equalsIgnoreCase("student-form")) {
+            } else if (action.equalsIgnoreCase("student-form")) {
                 request.getRequestDispatcher("/students/student_form.jsp").forward(request, response);
-            } 
-            else if (action.equalsIgnoreCase("student-list")) {
+            } else if (action.equalsIgnoreCase("student-list")) {
                 request.getRequestDispatcher("/students/students_list.jsp").forward(request, response);
-            } 
-            else if (action.equalsIgnoreCase("student")) {
+            } else if (action.equalsIgnoreCase("student")) {
                 request.getRequestDispatcher("/students/students.jsp").forward(request, response);
-            } 
-            else if (action.equalsIgnoreCase("process-student")) {
+            } else if (action.equalsIgnoreCase("process-student")) {
                 request.getRequestDispatcher("/ProcessStudentServlet").forward(request, response);
+            } else if (action.equalsIgnoreCase("instructor-form")) {
+                request.getRequestDispatcher("/instructors/instructor_form.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("instructor-list")) {
+                request.getRequestDispatcher("/instructors/instructors_list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("instructor")) {
+                request.getRequestDispatcher("/instructors/instructors.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("process-instructor")) {
+                request.getRequestDispatcher("/ProcessInstructorServlet").forward(request, response);
+                
+            }else if (action.equalsIgnoreCase("course-form")) {
+                request.getRequestDispatcher("/courses/course_form.jsp").forward(request, response);
+            }else if (action.equalsIgnoreCase("course-list")) {
+                request.getRequestDispatcher("/courses/course_list.jsp").forward(request, response);
+            }else if (action.equalsIgnoreCase("process-course")) {
+                request.getRequestDispatcher("/ProcessCourseServlet").forward(request, response);
             }
 
         }
